@@ -9,13 +9,19 @@
 int main(){
     // Sugestão: Defina variáveis separadas para cada atributo da cidade.
     // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
+
+    //Dados da primeira Carta ----
     char firstState[5];
     char firstCity[50];  
-    char firstCityCod[5];  
+    char firstCityCod[5];
     int firstPopulation;
     float firstArea;
     float firstPIB;
     int firstTouristAttractionsNum;
+    float firstPopulationDensity;
+    float firstPIBCapita;
+
+    //Dados da segunda Carta ----
     char secondState[5];
     char secondCity[50];
     char secondCityCod[5];
@@ -23,6 +29,8 @@ int main(){
     float secondArea;
     float secondPIB;
     int secondTouristAttractionsNum;
+    float secondPopulationDensity;
+    float secondPIBCapita;
     // Cadastro das Cartas:
     // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
     // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
@@ -59,6 +67,10 @@ int main(){
     scanf("%d", &firstTouristAttractionsNum);
     getchar();
 
+    firstPopulationDensity = firstPopulation / firstArea;
+    firstPIBCapita = firstPIB / firstPopulation;
+
+    //ISERÇÃO DOS DADOS DA SEGUNDA CARTA ----
     printf("Agora preescreva os dados da segunda carta...\n");
 
     printf("Estado: ");
@@ -89,15 +101,19 @@ int main(){
     scanf("%d", &secondTouristAttractionsNum);
     getchar();
 
+    secondPopulationDensity = secondPopulation / secondArea;
+    secondPIBCapita = secondPIB / secondPopulation;
+
+
     // Exibição dos Dados das Cartas:
     // Sugestão: Utilize a função printf para exibir as informações das cartas cadastradas de forma clara e organizada.
     // Exiba os valores inseridos para cada atributo da cidade, um por linha.
     printf("\n==============================\n");
     printf("Os dados da primeira carta são:\n");
-    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n", firstState, firstCity, firstCityCod, firstPopulation, firstArea, firstPIB, firstTouristAttractionsNum);
+    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n", firstState, firstCity, firstCityCod, firstPopulation, firstArea, firstPIB, firstTouristAttractionsNum, firstPopulationDensity, firstPIBCapita);
     
     printf("\n==============================\n");
     printf("Os dados da segunda carta são:\n ");
-    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n", secondState, secondCity, secondCityCod, secondPopulation, secondArea, secondPIB, secondTouristAttractionsNum);
+    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n", secondState, secondCity, secondCityCod, secondPopulation, secondArea, secondPIB, secondTouristAttractionsNum, secondPopulationDensity, secondPIBCapita);
     return 0;
 }
