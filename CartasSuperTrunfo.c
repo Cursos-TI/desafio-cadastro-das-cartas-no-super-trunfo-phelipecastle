@@ -54,7 +54,7 @@ int main(){
     getchar();
 
     printf("População: ");
-    scanf("%ul", &firstPopulation);
+    scanf("%u", &firstPopulation);
     getchar(); // limpa o \n do buffer
     
     printf("Área em M²: ");
@@ -133,9 +133,23 @@ int main(){
     int comparePIBCapita = firstPIBCapita > secondPIBCapita;
     int compareSuperPower = firstSuperPower > secondSuperPower;
 
-    printf("Comparação de Cartas;\n");
+    printf("Comparação de atributo;\n");
 
-    printf("-População: %i\n-Área: %i\n-PIB: %i\n-Attractions: %i\n-Densidade Populacional: %i\n-PIB per Capita: %i\n-Super Poder: %i\n", comparePopulation, compareArea, comparePIB, compareAttractions, compareDensityP, comparePIBCapita, compareSuperPower);
+    //Exibição do atributo escolhido de cada cidade.
+    printf("Carta 1 - %s (%s): %2.f\n", firstCity, firstState, firstPIB);
+    printf("Carta 2 - %s (%s): %2.f\n", secondCity, secondState, secondPIB);
+
+
+    // Estrutura de decisão de acordo com o atributo escolhido
+    if(comparePIB) {
+        // verifica se o valor 1 é maior que o valor 2
+        // Se o retorno for 1 é exibido a primeira parte
+        printf("\nCarta 1 (%s) venceu!\n", firstCity);
+    } else {
+        // Senão exibe o segundo argumento.
+        printf("Carta 2 (%s) venceu!\n", secondCity);
+    }
+
     
     return 0;
 }
