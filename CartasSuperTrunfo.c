@@ -14,23 +14,25 @@ int main(){
     char firstState[5];
     char firstCity[50];  
     char firstCityCod[5];
-    int firstPopulation;
+    unsigned long int firstPopulation;
     float firstArea;
     float firstPIB;
     int firstTouristAttractionsNum;
     float firstPopulationDensity;
     float firstPIBCapita;
+    float firstSuperPower;
 
     //Dados da segunda Carta ----
     char secondState[5];
     char secondCity[50];
     char secondCityCod[5];
-    int secondPopulation;
+    unsigned long int secondPopulation;
     float secondArea;
     float secondPIB;
     int secondTouristAttractionsNum;
     float secondPopulationDensity;
     float secondPIBCapita;
+    float secondSuperPower;
     // Cadastro das Cartas:
     // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
     // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
@@ -40,7 +42,7 @@ int main(){
     printf("Estado: ");
     scanf("%s", firstState);
     getchar();
-    
+
 
     printf("Cidade: ");
     fgets(firstCity, sizeof(firstCity), stdin);
@@ -52,7 +54,7 @@ int main(){
     getchar();
 
     printf("População: ");
-    scanf("%i", &firstPopulation);
+    scanf("%ul", &firstPopulation);
     getchar(); // limpa o \n do buffer
     
     printf("Área em M²: ");
@@ -70,6 +72,8 @@ int main(){
     firstPopulationDensity = firstPopulation / firstArea;
     firstPIBCapita = firstPIB / firstPopulation;
 
+    firstSuperPower = firstPopulation + firstArea + firstPIB + firstPIBCapita + firstPopulationDensity + firstTouristAttractionsNum;
+
     //ISERÇÃO DOS DADOS DA SEGUNDA CARTA ----
     printf("Agora preescreva os dados da segunda carta...\n");
 
@@ -86,7 +90,7 @@ int main(){
     getchar();
 
     printf("População: ");
-    scanf("%i", &secondPopulation);
+    scanf("%u", &secondPopulation);
     getchar();
 
     printf("Área em M²: ");
@@ -104,16 +108,34 @@ int main(){
     secondPopulationDensity = secondPopulation / secondArea;
     secondPIBCapita = secondPIB / secondPopulation;
 
+    secondSuperPower = secondPopulation + secondArea + secondPIB + secondPIBCapita + secondPopulationDensity + secondTouristAttractionsNum; 
+
+
 
     // Exibição dos Dados das Cartas:
     // Sugestão: Utilize a função printf para exibir as informações das cartas cadastradas de forma clara e organizada.
     // Exiba os valores inseridos para cada atributo da cidade, um por linha.
     printf("\n==============================\n");
     printf("Os dados da primeira carta são:\n");
-    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n", firstState, firstCity, firstCityCod, firstPopulation, firstArea, firstPIB, firstTouristAttractionsNum, firstPopulationDensity, firstPIBCapita);
+    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %ul de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n- Super poder: %.2f", firstState, firstCity, firstCityCod, firstPopulation, firstArea, firstPIB, firstTouristAttractionsNum, firstPopulationDensity, firstPIBCapita, firstSuperPower);
     
     printf("\n==============================\n");
     printf("Os dados da segunda carta são:\n ");
-    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %i de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n", secondState, secondCity, secondCityCod, secondPopulation, secondArea, secondPIB, secondTouristAttractionsNum, secondPopulationDensity, secondPIBCapita);
+    printf("- Estado: %s\n- Cidade: %s\n- Código da cid.: %s\n- População: %ul de habitantes\n- Área em M²: %.2f M²\n- PIB: %.2f B\n- Quantiade de pontos turísticos: %d\n- Densidade populacional: %.2f hab/km²\n- PIB per capita: %.2f reais\n", secondState, secondCity, secondCityCod, secondPopulation, secondArea, secondPIB, secondTouristAttractionsNum, secondPopulationDensity, secondPIBCapita);
+    
+    //Comparação dos atributos das cartas
+    printf("\n==============================\n");
+    int comparePopulation = firstPopulation > secondPopulation;
+    int compareArea = firstArea > secondArea;
+    int comparePIB = firstPIB > secondPIB;
+    int compareAttractions = firstTouristAttractionsNum > secondTouristAttractionsNum;
+    int compareDensityP = firstPopulationDensity < secondPopulationDensity;
+    int comparePIBCapita = firstPIBCapita > secondPIBCapita;
+    int compareSuperPower = firstSuperPower > secondSuperPower;
+
+    printf("Comparação de Cartas;\n");
+
+    printf("-População: %i\n-Área: %i\n-PIB: %i\n-Attractions: %i\n-Densidade Populacional: %i\n-PIB per Capita: %i\n-Super Poder: %i\n", comparePopulation, compareArea, comparePIB, compareAttractions, compareDensityP, comparePIBCapita, compareSuperPower);
+    
     return 0;
 }
