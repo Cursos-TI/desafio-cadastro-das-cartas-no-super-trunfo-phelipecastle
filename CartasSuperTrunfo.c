@@ -1,5 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+
+#define C1      1 // Carta 1 vence
+#define EMP     0 // Empate
+#define C2     -1 // Carta 2 vence
+
+const double EPS = 1e-9;
+
+
 
 // Desafio Super Trunfo - Países
 // Tema 1 - Cadastro das Cartas
@@ -7,33 +16,19 @@
 // Siga os comentários para implementar cada parte do desafio.
 //Teste larissa
 
-int main(){
+int main(void){
     // Sugestão: Defina variáveis separadas para cada atributo da cidade.
     // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
 
-    //Dados da primeira Carta ----
-    char firstState[5];
-    char firstCity[50];  
-    char firstCityCod[5];
-    unsigned int firstPopulation;
-    float firstArea;
-    float firstPIB;
-    int firstAttractionsNum;
-    float firstPopulationDensity;
-    float firstPIBCapita;
-    float firstSuperPower;
-
-    //Dados da segunda Carta ----
-    char secondState[5];
-    char secondCity[50];
-    char secondCityCod[5];
-    unsigned int secondPopulation;
-    float secondArea;
-    float secondPIB;
-    int secondAttractionsNum;
-    float secondPopulationDensity;
-    float secondPIBCapita;
-    float secondSuperPower;
+    //Dados da primeira  e segunda Carta ----
+    char firstState[5], firstCity[50], firstCityCod[5], secondState[5], secondCity[50], secondCityCod[5];
+    unsigned int firstPopulation, secondPopulation;
+    float firstArea, secondArea;
+    float firstPIB, secondPIB;
+    int firstAttractionsNum, secondAttractionsNum;
+    double firstPopulationDensity, secondPopulationDensity;
+    double firstPIBCapita, secondPIBCapita;
+    double firstSuperPower, secondSuperPower;
     // Cadastro das Cartas:
     // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
     // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
@@ -129,62 +124,181 @@ int main(){
     printf("Comparação de atributo;\n");
 
     //Escolha do atributo a ser comparado.
-    int option;
+
+    int option1, option2;
+    int flag1 = EMP, flag2 = EMP;
+    double amount1 = 0.0, amount2 = 0.0;
+   
     printf("Escolha um atributo para comparar entre as cartas:\n");
     printf("1. População\n");
     printf("2. Área\n");
     printf("3. PIB\n");
     printf("4. N° de Pontos turísticos\n");
     printf("5. Densidade Populacional\n");
-    printf("\n ---------------------------------\n");
     printf("Escolher: ");
-    scanf("%d", &option);
+    scanf("%d", &option1);
     
     // Estrutura lógica para comparar o atributo escolhido.
-    printf("Estado: %s - %s\n", firstCity, secondCity);
+    
 
-    switch (option)
+    switch (option1)
     {
-    case 1:
-        printf("População: %u - %u\n", firstPopulation, secondPopulation);
+    case 1: // População; Maior é melhor
+        if(firstPopulation == secondPopulation) flag1 = EMP; // Verifica se os valores são iguais
+        else  flag1 = firstPopulation > secondPopulation ? C1 : C2; // Verifica qual valor é maior ou Menor
+       // Recebem o valor para soma futura
+        amount1 += (double)firstPopulation;
+        amount2 += (double)secondPopulation;
+
         break;
-    case 2:
-        printf("Área: %2.f - %2.f\n", firstArea, secondArea);
+    case 2: // Área; Maior é melhor
+        if(fabs(firstArea - secondArea) < EPS) flag1 = EMP; // Verifica se os valores são iguais
+        else flag1 = firstArea > secondArea ? C1 : C2; // Verifica qual valor é maior ou Menor
+        // Recebem o valor para soma futura
+        amount1 += firstArea;
+        amount2 += secondArea;
+
         break;
-    case 3:
-        printf("PIB: %2.f - %2.f\n", firstPIB, secondPIB);
+    case 3: // PIB; Maior é melhor
+        if(fabs(firstPIB - secondPIB) < EPS) flag1 = EMP; // Verifica se os valores são iguais
+        else flag1 = firstPIB > secondPIB ? C1 : C2; // Verifica qual valor é maior ou Menor
+        // Recebem o valor para soma futura
+        amount1 += firstPIB;
+        amount2 += secondPIB;
+
         break;
-    case 4:
-        printf("Pontos turísticos: %d - %d\n", firstAttractionsNum, secondAttractionsNum);
+    case 4: //Pontos Turísticos; Maior é melhor
+        if(firstAttractionsNum == secondAttractionsNum) flag1 = EMP; // Verifica se os valores são iguais
+        else flag1 = firstAttractionsNum > secondAttractionsNum ? C1 : C2; // Verifica qual valor é maior ou Menor
+        // Recebem o valor para soma futura
+        amount1 += (double)firstAttractionsNum;
+        amount2 += (double)secondAttractionsNum;
+
         break;
-    case 5:
-        printf("Densidade Populacional: %2.f - %2.f\n", firstPopulationDensity, secondPopulationDensity);
+    case 5: // Densidade Populacional; Menor é melhor
+        if(fabs(firstPopulationDensity - secondPopulationDensity) < EPS) flag1 = EMP; // Verifica se os valores são iguais
+        else flag1 = firstPopulationDensity < secondPopulationDensity ? C1 : C2; // Verifica qual valor é maior ou Menor
+        // Recebem o valor para soma futura
+        amount1 += -firstPopulationDensity; //Inverso para não favorecer a carta com maior valor
+        amount2 += -secondPopulationDensity; //Inverso para não favorecer a carta com maior valor
+
         break;
     default:
         printf("Entrada inválida!");
         break;
     }
 
-    printf("---------------------------------------\n");
-
-    if(firstPopulation > secondPopulation ||
-       firstArea > secondArea ||
-       firstPIB > secondPIB ||
-       firstAttractionsNum > secondAttractionsNum ||
-       firstPopulationDensity < secondPopulationDensity) {
-        printf("###  Carta 1 venceu!  ###");
-
-    } else if(firstPopulation < secondPopulation ||
-              firstArea < secondArea ||
-              firstPIB < secondPIB ||
-              firstAttractionsNum < secondAttractionsNum ||
-              firstPopulationDensity > secondPopulationDensity) {
-                printf("###  Carta 2 venceu!  ###");
-
-            } else {
-                printf("***  O atributo de ambas as cartas possuem o mesmo valor  ***");
-
-            }
+    printf("\n==============================\n");
+    printf("Escolha outro Atributo:\n");
+    printf("1. População\n");
+    printf("2. Área\n");
+    printf("3. PIB\n");
+    printf("4. N° de Pontos turísticos\n");
+    printf("5. Densidade Populacional\n");
     
+    printf("Escolher: ");
+    scanf("%d", &option2);
+
+    printf("\n ---------------------------------\n");
+    printf("Estado: %s - %s\n", firstCity, secondCity);
+    if(option1 == 1) {
+        printf("População: %u - %u\n", firstPopulation, secondPopulation);
+    } else if (option1 == 2) {
+        printf("Área: %.2f - %.2f\n", firstArea, secondArea);
+    } else if(option1 == 3) {
+        printf("PIB: %.2f - %.2f\n", firstPIB, secondPIB);
+    } else if(option1 == 4) {
+        printf("Pontos Turísticos: %d - %d\n", firstAttractionsNum, secondAttractionsNum);
+    } else if (option1 == 5) {
+        printf("Densidade Populacional: %.2f - %.2f\n", firstPopulationDensity, secondPopulationDensity);
+    }
+
+    if(option1 == option2) {
+        printf("Atributo já selecionado!\n");
+    } else {
+        
+        switch (option2) {
+            case 1: // População; Maior é melhor
+                printf("População: %u - %u\n", firstPopulation, secondPopulation);
+
+                if(firstPopulation == secondPopulation) flag2 = EMP; // Verifica se os valores são iguais
+                else flag2 = firstPopulation > secondPopulation ? C1 : C2; // Verifica qual valor é maior ou Menor
+                // Soma dos valores dos atributos
+                amount1 += (double)firstPopulation; 
+                amount2 += (double)secondPopulation;
+                printf("Soma dos atributos: %.2f - %.2f\n", amount1, amount2);
+
+                break;
+            case 2: // Área; Maior é melhor
+                printf("Área: %.2f - %.2f\n", firstArea, secondArea);
+
+                if(fabs(firstArea - secondArea) < EPS) flag2 = EMP; // Verifica se os valores são iguais
+                else flag2 = firstArea > secondArea ? C1 : C2; // Verifica qual valor é maior ou Menor
+                // Soma dos valores dos atributos
+                amount1 += firstArea;
+                amount2 += secondArea;
+                printf("Soma dos atributos: %.2f - %.2f\n", amount1, amount2);
+
+                break;
+            case 3: // PIB; Maior é melhor
+                printf("PIB: %.2f - %.2f\n", firstPIB, secondPIB);
+                
+                if(fabs(firstPIB - secondPIB) < EPS) flag2 = EMP; // Verifica se os valores são iguais
+                else flag2 = firstPIB > secondPIB ? C1 : C2; // Verifica qual valor é maior ou Menor
+                // Soma dos valores dos atributos
+                amount1 += firstPIB;
+                amount2 += secondPIB;
+                printf("Soma dos atributos: %.2f - %.2f\n", amount1, amount2);
+
+                break;
+            case 4: // Pontos Turístico; Maior é melhor
+                printf("Pontos turísticos: %d - %d\n", firstAttractionsNum, secondAttractionsNum);
+                if(firstAttractionsNum == secondAttractionsNum) flag2 = EMP; // Verifica se os valores são iguais
+                else flag2 = firstAttractionsNum > secondAttractionsNum ? C1 : C2; // Verifica qual valor é maior ou Menor
+                // Soma dos valores dos atributos
+                amount1 += (double)firstAttractionsNum;
+                amount2 += (double)secondAttractionsNum;
+                printf("Soma dos atributos: %.2f - %.2f\n", amount1, amount2);
+
+                break;
+            case 5: // Densidade; Menor é melhor
+                printf("Densidade Populacional: %.2f - %.2f\n", firstPopulationDensity, secondPopulationDensity);
+                if(fabs(firstPopulationDensity - secondPopulationDensity) < EPS) flag2 = EMP; // Verifica se os valores são iguais
+                else flag2 = firstPopulationDensity < secondPopulationDensity ? C1 : C2; // Verifica qual valor é maior ou Menor
+                // Soma dos valores dos atributos
+                amount1 += -firstPopulationDensity; // Inverso para não favorecer o atributo com maior valor
+                amount2 += -secondPopulationDensity; // Inverso para não favorecer o atributo com maior valor
+                printf("Soma dos atributos: %.2f - %.2f\n", amount1, amount2);
+
+                break;
+            default:
+                printf("Entrada Inválida!\n");
+                break;
+        }
+
+
+    }
+
+    printf("---------------------------------------\n");
+    
+    //Estrutura de decisão para comparar o resultado das comparações
+    int score1 = (flag1 == C1) + (flag2 == C1);
+    int score2 = (flag1 == C2) + (flag2 == C2);
+    if (score1 == 2) {
+        printf("\n###   Carta 1 venceu! ###\n");
+
+    } else if (score2 == 2) {
+        printf("\n### Carta 2 Venceu! ###\n");
+
+    } else {
+        if(fabs(amount1 - amount2) < EPS) {
+            printf("\n*** EMPATE! ***\n");
+        } else if(amount1 > amount2) {
+            printf("\n###   Carta 1 venceu (Desempate pela soma)! ###\n");
+        } else {
+            printf("\n### Carta 2 Venceu (Desempate pela soma)! ###\n");
+        }
+    }
+
     return 0;
 }
